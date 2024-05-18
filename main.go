@@ -23,18 +23,16 @@ type Book struct {
 
 func main() {
 	router := gin.Default()
-	err := godotenv.Load()
 	port := os.Getenv("PORT")
-
+	err := godotenv.Load()
+	
+	if port == "" {
+		port = "8080"
+	}
+	
 	if err != nil {
 		fmt.Println("Error loading .env file:", err)
 		return
-	  }
-
-	println(port)
-
-	if port == "" {
-		port = "8080"
 	}
 
 	router.GET("/api", func(c *gin.Context) {
@@ -44,6 +42,4 @@ func main() {
 	})
 
 	router.Run(":" + port)
-
-	fmt.Printf("Server is running on port: %s\n", port)
 }
